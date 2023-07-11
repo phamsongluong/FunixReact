@@ -9,9 +9,12 @@ const Expense = (props) => {
         setYear(selectedYear);
     };
 
-    const res = [];
-    props.items.forEach(element => {
-        res.push(
+    const filterdExpenses = props.items.filter(expense => {
+        return expense.date.getFullYear().toString() === year;
+    });
+
+    const items = filterdExpenses.map(element => {
+        return (
             <ExpenseItem
                 title={element.title}
                 amount={element.amount}
@@ -20,6 +23,7 @@ const Expense = (props) => {
             ></ExpenseItem>
         )
     });
+
     return (
         <div>   
             <div className='expenses'>
@@ -27,7 +31,7 @@ const Expense = (props) => {
                     onChangeFilter={filterChangeHandler}
                     selected={year}
                 />
-                {res}
+                {items}
             </div>
         </div>
     );
